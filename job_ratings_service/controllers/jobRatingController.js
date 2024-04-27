@@ -128,3 +128,11 @@ export const getJobRating = async (req, res, next) => {
     next(error);
   }
 };
+
+export const healthCheck = async (req, res, next) => {
+  try {
+    res.status(200).json("health check api");
+  } catch (error) {
+    next(error);
+  }
+};

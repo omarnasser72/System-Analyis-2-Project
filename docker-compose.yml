@@ -1,0 +1,31 @@
+version: "3"
+services:
+  job_ratings_service:
+    build: ./job_ratings_service
+    container_name: job_ratings_service_container
+    ports:
+      - "7878:7878"
+    networks:
+      - employment-app
+    links:
+      - job_ratings_db
+    restart: on-failure
+    depends_on:
+      - job_ratings_db
+    volumes:
+      - ./job_ratings_service:/app
+      - /app/node_modules
+  job_ratings_db:
+    image: mongo
+    ports:
+      - "27018:27017"
+    networks:
+      - employment-app
+    volumes:
+      - job_ratings-volume:/data/db
+networks:
+  employment-app:
+    driver: bridge
+volumes:
+  job_ratings-volume:
+    driver: local

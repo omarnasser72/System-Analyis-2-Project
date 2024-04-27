@@ -2,6 +2,7 @@ import Express from "express";
 import {
   addJobRating,
   getJobRating,
+  healthCheck,
 } from "../controllers/jobRatingController.js";
 
 const router = Express.Router();
@@ -10,6 +11,9 @@ const router = Express.Router();
 router.post("/add", addJobRating);
 
 //Get Job Rating
-router.get("/:id", getJobRating);
+router.get("/get/:id", getJobRating);
+
+//Health Check
+router.get("/healthCheck", healthCheck);
 
 export default router;

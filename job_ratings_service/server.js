@@ -10,7 +10,7 @@ dotenv.config();
 
 const connect = async () => {
   try {
-    await mongoose.connect(process.env.MONGO);
+    await mongoose.connect(process.env.MONGO, { useNewUrlParser: true });
     console.log("connected to ratings database");
   } catch (error) {
     console.log(error);
