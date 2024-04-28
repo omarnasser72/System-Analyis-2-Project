@@ -118,12 +118,19 @@ export const addJobRating = async (req, res, next) => {
 
 export const getJobRating = async (req, res, next) => {
   try {
-    const jobRating = await JobRating.findById(req.params.id);
-    if (jobRating) res.status(200).json({ jobRate: jobRating.rating });
-    else
-      res
-        .status(400)
-        .json({ success: false, message: "job rating doesn't exist!" });
+    const jobRating = await JobRating.findOne({ jobId: req.params.id });
+    jobRating
+      ? res.status(200).json({ jobRate: jobRating.rating })
+      : res.status(200).json({ jobRate: 0 });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getAllJobRating = async (req, res, next) => {
+  try {
+    const jobRatings = await JobRating.find();
+    res.status(200).json(jobRatings);
   } catch (error) {
     next(error);
   }
