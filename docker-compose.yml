@@ -53,7 +53,7 @@ services:
     ports:
       - "5001:5001"
     networks:
-      -employment-app
+      - employment-app
     links:
       - contactus_db
     restart: on-failure
