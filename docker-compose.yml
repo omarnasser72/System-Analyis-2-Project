@@ -23,9 +23,35 @@ services:
       - employment-app
     volumes:
       - job_ratings-volume:/data/db
+  auth_service:
+    build: ./authentication_servic
+    container_name: authentication_servic_container
+    ports:
+      - "8080:7878"
+    networks:
+      - employment-app
+    links:
+      - auth_db
+    restart: on-failure
+    depends_on:
+      - auth_db
+    volumes:
+      - ./authentication_servic:/app
+      - /app/node_modules
+  auth_db:
+    image: mongo
+    ports:
+      - "27019:27017"
+    networks:
+      - employment-app
+    volumes:
+      - auth-volume:/data/db
+
 networks:
   employment-app:
     driver: bridge
 volumes:
   job_ratings-volume:
+    driver: local
+  auth-volume:
     driver: local
