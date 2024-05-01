@@ -1,8 +1,13 @@
+import { validationResult } from "express-validator";
 import JobRating from "../models/JobRating.js";
 import UserJobRating from "../models/userJobRating.js";
 
 export const addJobRating = async (req, res, next) => {
   try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
     console.log("req.body.userId: ", req.body.userId);
     console.log("req.body.jobId: ", req.body.jobId);
 
@@ -27,7 +32,7 @@ export const addJobRating = async (req, res, next) => {
           totolRates = totolRates + parseInt(userJobRate.rating);
         });
         const avg = totolRates / len;
-        const jobRate = (avg / 5) * 5;
+        const jobRate = parseInt((avg / 5) * 5);
         const updatedJobRate = await JobRating.findOneAndUpdate(
           {
             jobId: req.body.jobId,
