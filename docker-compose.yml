@@ -27,7 +27,7 @@ services:
     build: ./authentication_servic
     container_name: authentication_servic_container
     ports:
-      - "8080:7878"
+      - "8080:7001"
     networks:
       - employment-app
     links:
