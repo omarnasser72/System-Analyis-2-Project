@@ -86,7 +86,7 @@ export const addJobRating = async (req, res, next) => {
           totolRates = totolRates + parseInt(userJobRate.rating);
         });
         const avg = totolRates / len;
-        const jobRate = (avg / 5) * 5;
+        const jobRate = parseInt((avg / 5) * 5);
 
         console.log(
           "Rating exist and update successfully:",
