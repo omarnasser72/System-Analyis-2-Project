@@ -1,31 +1,5 @@
 version: "3"
 services:
-
-  companies_service:
-    build: ./companies_service
-    container_name: companies_service_container
-    ports:
-      - "5001:5001"
-    networks:
-      - employment-app
-    links:
-      - companies_db
-    restart: on-failure
-    depends_on:
-      - companies_db
-    volumes:
-      - ./companies_service:/app
-      - /app/node_modules
-
-  companies_db:  
-    image: mongo:3.6.19-xenial
-    ports:
-      - "27016:27015"
-    networks:
-      - employment-app
-    volumes:
-      - companies-volume:/data/db
-
   job_ratings_service:
     build: ./job_ratings_service
     container_name: job_ratings_service_container
@@ -34,31 +8,31 @@ services:
     networks:
       - employment-app
     links:
-      - job_ratings_db
-    restart: on-failure
+      - job_db
+    restart: always
     depends_on:
-      - job_ratings_db
+      - job_db
     volumes:
-      - ./job_ratings_service:/app
+      - ./job_service:/app
       - /app/node_modules
-  job_ratings_db:
+  job_db:
     image: mongo
     ports:
       - "27018:27017"
     networks:
       - employment-app
     volumes:
-      - job_ratings-volume:/data/db
+      - job-volume:/data/db
   auth_service:
     build: ./authentication_servic
     container_name: authentication_servic_container
     ports:
-      - "8081:7001"
+      - "8080:7878"
     networks:
       - employment-app
     links:
       - auth_db
-    restart: on-failure
+    restart: always
     depends_on:
       - auth_db
     volumes:
@@ -72,16 +46,36 @@ services:
       - employment-app
     volumes:
       - auth-volume:/data/db
-
+  contactus_service:
+  
+    build: ./contactus_service
+    container_name: contactus_service_container
+    ports:
+      - "5001:5001"
+    networks:
+      - employment-app
+    links:
+      - contactus_db
+    restart: on-failure
+    depends_on:
+      - contactus_db
+    volumes:
+      - ./contactus_service:/app
+      - /app/node_modules
+  contactus_db:
+    image: mongo:3.6.19-xenial
+    ports:
+      - "27020:27017"
+    networks:
+      - employment-app
+    volumes:
+      - contactus-volume:/data/db
+  
 networks:
   employment-app:
     driver: bridge
 volumes:
-  companies-volume:
-    driver: local
   job_ratings-volume:
     driver: local
   auth-volume:
     driver: local
-  
-

@@ -11,4 +11,4 @@ const JobRatingSchema = new mongoose.Schema({
   },
 });
 
-export default mongoose.model("JobRating", JobRatingSchema);
+export default mongoose.model("job ratings", JobRatingSchema);

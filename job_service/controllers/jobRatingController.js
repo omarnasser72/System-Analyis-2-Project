@@ -86,7 +86,7 @@ export const addJobRating = async (req, res, next) => {
           totolRates = totolRates + parseInt(userJobRate.rating);
         });
         const avg = totolRates / len;
-        const jobRate = (avg / 5) * 5;
+        const jobRate = parseInt((avg / 5) * 5);
 
         console.log(
           "Rating exist and update successfully:",
@@ -136,14 +136,6 @@ export const getAllJobRating = async (req, res, next) => {
   try {
     const jobRatings = await JobRating.find();
     res.status(200).json(jobRatings);
-  } catch (error) {
-    next(error);
-  }
-};
-
-export const healthCheck = async (req, res, next) => {
-  try {
-    res.status(200).json("health check api");
   } catch (error) {
     next(error);
   }
