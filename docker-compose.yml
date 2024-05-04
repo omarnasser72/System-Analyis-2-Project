@@ -18,7 +18,7 @@ services:
   job_db:
     image: mongo
     ports:
-      - "27018:27017"
+      - "27020:27017"
     networks:
       - employment-app
     volumes:
@@ -27,7 +27,7 @@ services:
     build: ./authentication_servic
     container_name: authentication_servic_container
     ports:
-      - "8080:7878"
+      - "7070:7878"
     networks:
       - employment-app
     links:
@@ -65,7 +65,7 @@ services:
   contactus_db:
     image: mongo:3.6.19-xenial
     ports:
-      - "27020:27017"
+      - "27090:27017"
     networks:
       - employment-app
     volumes:
@@ -90,7 +90,7 @@ services:
   companies_db:  
     image: mongo:3.6.19-xenial
     ports:
-      - "27016:27015"
+      - "27031:27017"
     networks:
       - employment-app
     volumes:
@@ -100,10 +100,11 @@ networks:
   employment-app:
     driver: bridge
 volumes:
+  companies-volume:
+    driver: local
   job-volume:
     driver: local
   auth-volume:
     driver: local
-
-  companies-volume:
+  contactus-volume:
     driver: local
