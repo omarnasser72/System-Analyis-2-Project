@@ -1,5 +1,31 @@
 version: "3"
 services:
+
+  companies_service:
+    build: ./companies_service
+    container_name: companies_service_container
+    ports:
+      - "5001:5001"
+    networks:
+      - employment-app
+    links:
+      - companies_db
+    restart: on-failure
+    depends_on:
+      - companies_db
+    volumes:
+      - ./companies_service:/app
+      - /app/node_modules
+
+  companies_db:  
+    image: mongo:3.6.19-xenial
+    ports:
+      - "27030:27040"
+    networks:
+      - employment-app
+    volumes:
+      - companies-volume:/data/db
+
   job_ratings_service:
     build: ./job_ratings_service
     container_name: job_ratings_service_container
@@ -27,7 +53,7 @@ services:
     build: ./authentication_servic
     container_name: authentication_servic_container
     ports:
-      - "8080:7878"
+      - "8081:8081"
     networks:
       - employment-app
     links:
@@ -41,7 +67,7 @@ services:
   auth_db:
     image: mongo
     ports:
-      - "27019:27017"
+      - "27020:27020"
     networks:
       - employment-app
     volumes:
@@ -51,7 +77,11 @@ networks:
   employment-app:
     driver: bridge
 volumes:
+  companies-volume:
+    driver: local
   job_ratings-volume:
     driver: local
   auth-volume:
     driver: local
+  
+
