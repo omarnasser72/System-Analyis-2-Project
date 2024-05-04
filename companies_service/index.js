@@ -6,7 +6,7 @@ const db = require("./db");
 const CampanyRouter = require("./routes/company-router");
 
 const app = express();
-const apiPort = 5001;
+const apiPort = 5002;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
