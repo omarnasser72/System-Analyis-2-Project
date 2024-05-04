@@ -27,7 +27,7 @@ services:
     build: ./authentication_servic
     container_name: authentication_servic_container
     ports:
-      - "8080:7001"
+      - "8080:7878"
     networks:
       - employment-app
     links:
@@ -47,7 +47,6 @@ services:
     volumes:
       - auth-volume:/data/db
   contactus_service:
-  
     build: ./contactus_service
     container_name: contactus_service_container
     ports:
@@ -70,7 +69,30 @@ services:
       - employment-app
     volumes:
       - contactus-volume:/data/db
-  
+  companies_service:
+    build: ./companies_service
+    container_name: companies_service_container
+    ports:
+      - "5002:5002"
+    networks:
+      - employment-app
+    links:
+      - companies_db
+    restart: on-failure
+    depends_on:
+      - companies_db
+    volumes:
+      - ./companies_service:/app
+      - /app/node_modules
+  companies_db:
+    image: mongo:3.6.19-xenial
+    ports:
+      - "27030:27017"
+    networks:
+      - employment-app
+    volumes:
+      - companies-volume:/data/db
+
 networks:
   employment-app:
     driver: bridge
@@ -81,4 +103,5 @@ volumes:
     driver: local
   contactus-volume:
     driver: local
-  
+  companies-volume:
+    driver: local
