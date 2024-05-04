@@ -21,6 +21,15 @@ app.use("/api/auth", authRoutes);
 // Define user routes
 app.use("/api/user", userRoutes);
 
+//health check
+app.get("/healthCheck", (req, res, next) => {
+  try {
+    res.status(200).json("health check api from job service");
+  } catch (error) {
+    next(error);
+  }
+});
+
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);

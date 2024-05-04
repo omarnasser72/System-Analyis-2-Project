@@ -1,28 +1,28 @@
 version: "3"
 services:
-  job_ratings_service:
-    build: ./job_ratings_service
-    container_name: job_ratings_service_container
+  job_service:
+    build: ./job_service
+    container_name: job_service_container
     ports:
       - "7878:7878"
     networks:
       - employment-app
     links:
-      - job_ratings_db
-    restart: on-failure
+      - job_db
+    restart: always
     depends_on:
-      - job_ratings_db
+      - job_db
     volumes:
-      - ./job_ratings_service:/app
+      - ./job_service:/app
       - /app/node_modules
-  job_ratings_db:
+  job_db:
     image: mongo
     ports:
       - "27018:27017"
     networks:
       - employment-app
     volumes:
-      - job_ratings-volume:/data/db
+      - job-volume:/data/db
   auth_service:
     build: ./authentication_servic
     container_name: authentication_servic_container
@@ -32,7 +32,7 @@ services:
       - employment-app
     links:
       - auth_db
-    restart: on-failure
+    restart: always
     depends_on:
       - auth_db
     volumes:
@@ -51,7 +51,7 @@ networks:
   employment-app:
     driver: bridge
 volumes:
-  job_ratings-volume:
+  job-volume:
     driver: local
   auth-volume:
     driver: local
