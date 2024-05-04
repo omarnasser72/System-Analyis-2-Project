@@ -15,4 +15,4 @@ const UserJobRatingSchema = new mongoose.Schema({
   },
 });
 
-export default mongoose.model("UserJobRating", UserJobRatingSchema);
+export default mongoose.model("user job rating", UserJobRatingSchema);

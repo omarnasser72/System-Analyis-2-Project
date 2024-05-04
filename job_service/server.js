@@ -2,7 +2,9 @@ import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import jobRatingRoute from "./routes/jobRatingRoute.js";
+import jobRoute from "./routes/jobRoute.js";
+import jobRequestRoute from "./routes/jobRequestRoute.js";
+//import jobRatingRoute from "./routes/jobRatingRoute.js";
 
 const app = express();
 
@@ -11,7 +13,7 @@ dotenv.config();
 const connect = async () => {
   try {
     await mongoose.connect(process.env.MONGO);
-    console.log("connected to ratings database");
+    console.log("connected to job database");
   } catch (error) {
     console.log(error);
   }
@@ -20,7 +22,19 @@ const connect = async () => {
 app.use(cors({ origin: "*" }));
 app.use(express.json());
 
-app.use("/api/jobRating", jobRatingRoute);
+app.use("/api/jobs", jobRoute);
+
+app.use("/api/jobRequests", jobRequestRoute);
+
+//health check
+app.get("/healthCheck", (req, res, next) => {
+  try {
+    res.status(200).json("health check api from job service");
+  } catch (error) {
+    next(error);
+  }
+});
+//app.use("/api/jobRating", jobRatingRoute);
 
 //Error handling
 app.use((error, req, res, next) => {
@@ -35,5 +49,5 @@ app.use((error, req, res, next) => {
 
 app.listen(process.env.PORT, async () => {
   await connect();
-  console.log(`Job rating service is running on port ${process.env.PORT}`);
+  console.log(`Job service is running on port ${process.env.PORT}`);
 });
