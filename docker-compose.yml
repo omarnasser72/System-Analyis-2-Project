@@ -20,7 +20,7 @@ services:
   companies_db:  
     image: mongo:3.6.19-xenial
     ports:
-      - "27030:27040"
+      - "27016:27015"
     networks:
       - employment-app
     volumes:
@@ -53,7 +53,7 @@ services:
     build: ./authentication_servic
     container_name: authentication_servic_container
     ports:
-      - "8081:8081"
+      - "8081:7001"
     networks:
       - employment-app
     links:
@@ -67,7 +67,7 @@ services:
   auth_db:
     image: mongo
     ports:
-      - "27020:27020"
+      - "27019:27017"
     networks:
       - employment-app
     volumes:
