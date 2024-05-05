@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const Campany = new Schema(
+const Company = new Schema(
   {
     name: { type: String, required: true },
     info: { type: String, required: true },
@@ -10,4 +10,4 @@ const Campany = new Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("companies", Campany);
+module.exports = mongoose.model("companies", Company);
