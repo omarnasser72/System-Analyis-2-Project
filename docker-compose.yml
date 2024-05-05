@@ -1,16 +1,5 @@
 version: "3"
 services:
-  weather_service:
-    build: ./weather_service
-    container_name: weather_service_container
-    ports:
-      - "5002:5002"
-    networks:
-      - employment-app
-    volumes:
-      - ./weather_service:/app
-      - /app/node_modules
-
   job_service:
     build: ./job_service
     container_name: job_service_container
@@ -20,7 +9,7 @@ services:
       - employment-app
     links:
       - job_db
-    restart: always
+    restart: on-failure
     depends_on:
       - job_db
     volumes:
@@ -29,7 +18,7 @@ services:
   job_db:
     image: mongo
     ports:
-      - "27020:27017"
+      - "27018:27017"
     networks:
       - employment-app
     volumes:
@@ -38,12 +27,12 @@ services:
     build: ./authentication_servic
     container_name: authentication_servic_container
     ports:
-      - "7070:7878"
+      - "8080:7001"
     networks:
       - employment-app
     links:
       - auth_db
-    restart: always
+    restart: on-failure
     depends_on:
       - auth_db
     volumes:
@@ -75,7 +64,7 @@ services:
   contactus_db:
     image: mongo:3.6.19-xenial
     ports:
-      - "27090:27017"
+      - "27020:27017"
     networks:
       - employment-app
     volumes:
@@ -98,11 +87,21 @@ services:
   companies_db:
     image: mongo:3.6.19-xenial
     ports:
-      - "27016:27015"
+      - "27021:27017"
     networks:
       - employment-app
     volumes:
       - companies-volume:/data/db
+  weather_service:
+    build: ./weather_service
+    container_name: weather_service_container
+    ports:
+      - "5003:5003"
+    networks:
+      - employment-app
+    volumes:
+      - ./weather_service:/app
+      - /app/node_modules
 
 networks:
   employment-app:
