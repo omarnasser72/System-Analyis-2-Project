@@ -1,13 +1,10 @@
 const jwt = require("jsonwebtoken");
 //const bcrypt = require('bcrypt');
-const User = require("../models/user.js");
+const User = require("../models/userjs");
 
 // Register a new user
 const register = async (req, res, next) => {
   try {
-    const usernameExist = await User.findOne({ username: req.body.username });
-    if (usernameExist)
-      return res.status(400).json({ message: "Username already exists" });
     const emailExist = await User.findOne({ email: req.body.email });
     if (emailExist)
       return res.status(400).json({ message: "Email already exists" });

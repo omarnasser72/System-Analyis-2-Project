@@ -1,10 +1,9 @@
 {
 	"info": {
-		"_postman_id": "54d688de-8081-4bd2-8e65-214d4b2d946b",
+		"_postman_id": "7d845aab-abca-45b8-a268-d6f57f96437f",
 		"name": "SA-2",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "26664093",
-		"_collection_link": "https://grey-comet-353575.postman.co/workspace/cdf56b32-b966-4b4c-8539-5bf0ee62e6d0/collection/26664093-54d688de-8081-4bd2-8e65-214d4b2d946b?action=share&source=collection_link&creator=26664093"
+		"_exporter_id": "26571473"
 	},
 	"item": [
 		{
@@ -322,7 +321,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:7878/api/jobs/",
+							"raw": "http://localhost:7878/api/jobRequests/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -330,7 +329,7 @@
 							"port": "7878",
 							"path": [
 								"api",
-								"jobs",
+								"jobRequests",
 								""
 							]
 						}
@@ -338,7 +337,7 @@
 					"response": []
 				},
 				{
-					"name": "Get Job Request",
+					"name": "Get User Job Requests",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -400,7 +399,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"admin@mail.com\",\r\n    \"password\":\"1234578\"\r\n}",
+							"raw": "{\r\n    \"email\":\"admin@mail.com\",\r\n    \"password\":\"12345678\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -529,7 +528,10 @@
 					"name": "healthy cheak",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				},
@@ -537,7 +539,10 @@
 					"name": "Get Companies",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				}
