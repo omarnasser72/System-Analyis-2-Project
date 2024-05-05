@@ -4,7 +4,7 @@ import {
   addJobRequest,
   deleteJobRequest,
   getAllJobRequests,
-  getJobRequest,
+  getUserJobRequests,
   updateJobRequest,
 } from "../controllers/jobRequestController.js";
 
@@ -34,8 +34,8 @@ router.put(
 //delete job request
 router.delete("/:id", deleteJobRequest);
 
-//get a job request
-router.get("/:id", getJobRequest);
+//get user job requests
+router.get("/:id", getUserJobRequests);
 
 //get all job requests
 router.get("", getAllJobRequests);

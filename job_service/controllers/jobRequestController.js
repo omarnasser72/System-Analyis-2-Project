@@ -61,13 +61,13 @@ export const deleteJobRequest = async (req, res, next) => {
   }
 };
 
-export const getJobRequest = async (req, res, next) => {
+export const getUserJobRequests = async (req, res, next) => {
   try {
-    const jobRequest = await JobRequest.findById(req.params.id);
-    if (!jobRequest)
-      return res.status(400).json({ message: "job request doesn't exist!" });
+    const jobRequests = await JobRequest.find({ user_id: req.params.id });
+    if (!jobRequests)
+      return res.status(400).json({ message: "job requests don't exist!" });
 
-    res.status(200).json(jobRequest);
+    res.status(200).json(jobRequests);
   } catch (error) {
     next(error);
   }
