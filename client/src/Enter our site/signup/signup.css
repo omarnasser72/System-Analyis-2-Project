@@ -1,0 +1,16 @@
+.form {
+    width: 50%;
+    margin:  10px;
+  }
+  
+  .btn {
+    margin-left: 40%;
+    margin-top: 10px;
+  }
+  h2{
+    text-align: center;
+    margin-top: 20px;
+  }
+  a {
+    color: black;
+  }

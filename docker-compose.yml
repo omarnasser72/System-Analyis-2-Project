@@ -1,5 +1,18 @@
 version: "3"
 services:
+
+  client:
+    build: ./client
+    container_name: client_container
+    stdin_open: true
+    ports:
+      - "3000:3000"
+    networks:
+      - employment-app
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+      
   job_service:
     build: ./job_service
     container_name: job_service_container
@@ -23,6 +36,7 @@ services:
       - employment-app
     volumes:
       - job-volume:/data/db
+
   auth_service:
     build: ./authentication_servic
     container_name: authentication_servic_container
@@ -46,6 +60,7 @@ services:
       - employment-app
     volumes:
       - auth-volume:/data/db
+
   contactus_service:
     build: ./contactus_service
     container_name: contactus_service_container
@@ -69,6 +84,7 @@ services:
       - employment-app
     volumes:
       - contactus-volume:/data/db
+
   companies_service:
     build: ./companies_service
     container_name: companies_service_container
@@ -92,6 +108,7 @@ services:
       - employment-app
     volumes:
       - companies-volume:/data/db
+
   weather_service:
     build: ./weather_service
     container_name: weather_service_container
@@ -103,15 +120,42 @@ services:
       - ./weather_service:/app
       - /app/node_modules
 
+
+  datetime_service:
+    build: ./DateTime
+    container_name: datetime_container
+    ports:
+      - "4000:4000"
+    networks:
+      - employment-app
+    volumes:
+      - ./DateTime:/app
+      - /app/node_modules
+
 networks:
   employment-app:
     driver: bridge
 volumes:
   companies-volume:
     driver: local
+
   job-volume:
     driver: local
+
   auth-volume:
     driver: local
+
   contactus-volume:
     driver: local
+
+  client-volume:
+    driver: local
+
+  weather_service:
+     driver: local
+
+  DateTime:
+     driver: local
+  
+
+

@@ -1,0 +1,15 @@
+.about{
+    text-align:justify;
+    font-size: 21px;
+    font-style:inherit;
+    color: rgb(39, 40, 43);
+}  
+h4{
+    
+    font-size:25px;
+    font-style:unset;
+    text-align: justify;
+    color: black;
+    margin-left: 20px ;
+    margin-top: 15px;
+}
