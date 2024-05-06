@@ -16,7 +16,7 @@ const GetJob = () => {
 useEffect(()=>{
     setuser({ ...job_application, loading: true });
     axios
-      .get("http://localhost:7878/api/jobs/66340d12314a034b8c4a80b7",
+      .get("http://localhost:7878/api/jobs/",
     {headers:{token:auth.token,"Content-Type":"multipart/form-data"}} )
     .then((resp) => {
         setuser({ ...job_application, results: resp.data, loading: false, err: null });

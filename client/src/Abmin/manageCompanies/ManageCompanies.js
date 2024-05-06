@@ -3,20 +3,19 @@ import Table from "react-bootstrap/Table";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 // import { useNavigate } from 'react-router-dom';
-import "./GetUser";
 import { getAuthUser } from "../../Storage/Storage";
 import axios from "axios";
 
-const ManageJobs = () => {
+const ManageCompanies = () => {
   const token = getAuthUser().token;
-  const [jobs, setjobs] = useState([]);
+  const [companies, setcompanies] = useState([]);
   const [changeOccurs, setChange] = useState("");
 
-  const handleDelete = async (jobId) => {
+  const handleDelete = async (companyID) => {
     try {
-      console.log(jobId);
+      console.log(companyID);
       const res = await axios.delete(
-        `http://localhost:7878/api/jobs/66340d12314a034b8c4a80b7${jobId}`,
+        `http://localhost:5002/api/companies/6635815b437a258b45b637fe${companyID}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -28,43 +27,39 @@ const ManageJobs = () => {
     } catch (error) {
       console.log(error);
     }
-    setChange(jobId);
+    setChange(companyID);
   };
 
-  const fetch = async () => {
-    try {
-      console.log(token);
-      const res = await axios.get("http://localhost:7878/api/jobs/", {
-        headers: {
-          "Content-Type": "application/json",
-          token: token,
-        },
-      });
-      if (res?.data) setjobs(res.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
   useEffect(() => {
+    const fetch = async () => {
+      try {
+        console.log(token);
+        const res = await axios.get("http://localhost:5002/api/companies", {
+          headers: {
+            "Content-Type": "application/json",
+            token: token,
+          },
+        });
+        if (res?.data) setcompanies(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
     if (token || changeOccurs) fetch();
   }, [token, changeOccurs]);
 
-  useEffect(()=>{
-    fetch()
-  },[])
-  
   return (
-    <div className="manage-job p5">
+    <div className="manage-company p5">
       <div className="header d-flex justify-content-between mb-5">
-        <h3 className="text-center">Manage Jobs</h3>
-        <Link to={"./AddJob"} className="btn btn-success">
-          Add New Job
+        <h3 className="text-center">Manage companies</h3>
+        <Link to={"./AddCompany"} className="btn btn-success">
+          Add New company
         </Link>
       </div>
       <Table striped bordered hover size="5m">
         <thead>
           <tr>
-            <th>ID</th>
+           
             <th>Position</th>
             <th>Description</th>
             <th>Offer</th>
@@ -75,26 +70,26 @@ const ManageJobs = () => {
           </tr>
         </thead>
         <tbody>
-          {jobs?.map((job) => (
-            <tr key={job.id} id={job.id}>
-              <td>{job.id}</td>
-              <td>{job.position}</td>
-              <td>{job.description}</td>
-              <td>{job.offer}</td>
-              <td>{job.max_candidate_number}</td>
-              <td>{job.image_url}</td>
-              <td>{job.qualification}</td>
+          {companies?.map((company) => (
+            <tr key={company.id} id={company.id}>
+              <td>{company.id}</td>
+              <td>{company.position}</td>
+              <td>{company.description}</td>
+              <td>{company.offer}</td>
+              <td>{company.max_candidate_number}</td>
+              <td>{company.image_url}</td>
+              <td>{company.qualification}</td>
               <td>
                 <button
                   className="btn btn-sm btn-danger mx-1"
                   onClick={(e) => {
                     e.preventDefault();
-                    handleDelete(job.id);
+                    handleDelete(company.id);
                   }}
                 >
                   Remove
                 </button>
-                <Link to={" " + job.id} className="btn btn-sm btn-primary mx-2">
+                <Link to={" " + company.id} className="btn btn-sm btn-primary mx-2">
                   update
                 </Link>
               </td>
@@ -102,11 +97,9 @@ const ManageJobs = () => {
           ))}
         </tbody>
       </Table>
-      <Link to={"GetUser"} className="btn btn-sm btn-primary mx-2">
-        Users Apllied
-      </Link>
+      
     </div>
   );
 };
 
-export default ManageJobs;
+export default ManageCompanies;

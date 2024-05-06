@@ -29,24 +29,17 @@ const HomePage = () => {
     setjobs({ ...jobs, loading: true });
     axios
       .get("http://localhost:7878/api/jobs/", {
+        
         // params: {
         //   search: search,
         // },
         headers: { token: token },
+        
       })
+      
       .then(async (resp) => {
         console.log(resp);
         console.log(resp.data);
-        await Promise.all(
-          resp.data?.map(async (job) => {
-            const res = await axios.get(
-              `http://localhost:7878/api/jobRating/get/${job.id}`
-            );
-            console.log(res);
-            job.rate = res?.data?.jobRate;
-          })
-        );
-        console.log("mapping finished");
         setjobs({ ...jobs, results: resp.data, loading: false, err: null });
       })
       .catch((err) => {
@@ -60,7 +53,7 @@ const HomePage = () => {
         console.log(err);
       });
   }, [jobs.reload]);
-
+  console.error();
   const searchjobs = (e) => {
     e.preventDefault();
     setjobs({ ...jobs, reload: jobs.reload + 1 });

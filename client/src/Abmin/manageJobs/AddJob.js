@@ -82,6 +82,7 @@ const AddJob = () => {
         },
       });
       console.log(res);
+      console.log(error);
 
       if (res?.data) setJustAdded(true);
       const timeout = setTimeout(() => {

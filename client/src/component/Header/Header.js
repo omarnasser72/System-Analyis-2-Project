@@ -71,7 +71,7 @@ const Header = () => {
                 </Link>
 
                 <Link className="nav-link" to={"/manageUsers"}>
-                  Manage Users
+                  Manage Companies
                 </Link>
               </>
             )}

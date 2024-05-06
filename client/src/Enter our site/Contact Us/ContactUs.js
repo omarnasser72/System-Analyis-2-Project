@@ -15,7 +15,7 @@ const ContactUs = () => {
     e.preventDefault();
     setContactUs({ ...ContactUs, loading: true, err: [] });
     axios
-      .post("http://localhost:5001/api/", {
+      .post("http://localhost:5001/api/contact/send", {
         email: ContactUs.email,
         password: ContactUs.password,
       })
@@ -49,15 +49,20 @@ const ContactUs = () => {
         />
       </div>
       <div className="ABout you">
-        <label>About You</label>
+        <label>your message</label>
         <input
           type="Text"
           className="form-control"
           placeholder="Describe yourself"
           value={ContactUs.message}
-          onChange={(e) => setContactUs({ ...ContactUs, messazzzzzzzzzzge: e.target.value })}
+          onChange={(e) => setContactUs({ ...ContactUs, message: e.target.value })}
         />
       </div>
+      <div className="submit">
+        <button type="submit" className="btn btn-dark">
+          Submit
+        </button>
+        </div>
     </>
   );
 };

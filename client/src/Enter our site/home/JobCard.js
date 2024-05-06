@@ -6,9 +6,6 @@ import "./JobCard.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { getAuthUser } from "../../Storage/Storage.js";
-import { Rating } from "@mui/material";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 
 const JobCard = (props) => {
   let { id } = useParams();
@@ -68,88 +65,20 @@ const JobCard = (props) => {
     }, 1000);
   };
 
-  const [rate, setRate] = useState("");
-  const [currJobId, setCurrJobId] = useState("");
-  const [waitingToSubmitRate, setRateSubmission] = useState(false);
-
-  useEffect(() => {
-    console.log(waitingToSubmitRate);
-  }, [waitingToSubmitRate]);
-
-  useEffect(() => {
-    console.log(rate);
-    console.log(currJobId);
-  }, [rate, currJobId]);
-
-  const handleRateChange = (e, jobId) => {
-    setRate(e.target.value);
-    setCurrJobId(jobId);
-  };
-
-  const handleRateClick = async (e) => {
-    try {
-      const res = await axios.post(`http://localhost:7878/api/jobRequests`, {
-        jobId: currJobId.toString(),
-        userId: userId.toString(),
-        rating: parseInt(rate),
-      });
-      console.log(res);
-      window.location.reload();
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
     <>
       <Card className="card" style={{ height: "190vh" }}>
-        {waitingToSubmitRate ? (
-          <>
             <Card.Title>{props.position}</Card.Title>
             <Card.Img
               className="card-img"
               variant="top"
-              src={props.image_url}
-            />
-            <div className="submissionSec">
-              <div className="submissionSubSec">
-                <Rating
-                  precision={1}
-                  onChange={(e) => handleRateChange(e, props.id)}
-                />
-                <FontAwesomeIcon
-                  icon={faCircleXmark}
-                  className="closeRateSubmission"
-                  onClick={() => setRateSubmission(false)}
-                />
-              </div>
-              <button className="subBtn" onClick={handleRateClick}>
-                Submit
-              </button>
-            </div>
-          </>
-        ) : (
-          <>
-            <Card.Title>{props.position}</Card.Title>
-            <Card.Img
-              className="card-img"
-              variant="top"
-              src={props.image_url}
+              src={`/upload/${props.image_url}`}
             />
             <Card.Body>
               <Card.Title>{props.position}</Card.Title>
               <Card.Text>{props.description}</Card.Text>
               <Card.Text>{props.qualification}</Card.Text>
               <Card.Text>{props.offer}</Card.Text>
-              <div className="ratingSec">
-                <button className="rate">{props.rate}</button>
-                <button
-                  className="rateBtn"
-                  onClick={() => setRateSubmission(true)}
-                >
-                  Rate
-                </button>
-              </div>
               <button
                 className="btn btn-dark w-100 m-0"
                 onClick={(e) => Applyjob(props.id)}
@@ -157,8 +86,6 @@ const JobCard = (props) => {
                 Apply
               </button>
             </Card.Body>
-          </>
-        )}
       </Card>
       {applied ? (
         applicationSuccess ? (

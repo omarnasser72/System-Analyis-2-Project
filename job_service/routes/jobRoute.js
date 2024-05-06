@@ -16,22 +16,22 @@ router.post(
   body("position")
     .isString()
     .withMessage("Please, enter valid position")
-    .isLength({ min: 4, max: 25 })
+    .isLength({ min: 4})
     .withMessage("Please, enter job position in range 4 to 25 chars"),
   body("description")
     .isString()
     .withMessage("Please, enter valid description")
-    .isLength({ min: 4, max: 25 })
+    .isLength({ min: 4})
     .withMessage("Please, enter job description in range 4 to 25 chars"),
   body("qualification")
     .isString()
     .withMessage("Please, enter valid qualification")
-    .isLength({ min: 4, max: 25 })
+    .isLength({ min: 4})
     .withMessage("Please, enter job qualification in range 4 to 25 chars"),
   body("image_url")
     .isString()
     .withMessage("Please, enter valid image url")
-    .isLength({ min: 4 })
+    .isLength({ min: 4})
     .withMessage("Please, enter job image url with min 4 chars"),
   body("offer")
     .isString()
@@ -52,17 +52,17 @@ router.put(
   body("position")
     .isString()
     .withMessage("Please, enter valid position")
-    .isLength({ min: 4, max: 25 })
+    .isLength({ min: 4})
     .withMessage("Please, enter job position in range 4 to 25 chars"),
   body("description")
     .isString()
     .withMessage("Please, enter valid description")
-    .isLength({ min: 4, max: 25 })
+    .isLength({ min: 4})
     .withMessage("Please, enter job description in range 4 to 25 chars"),
   body("description")
     .isString()
     .withMessage("Please, enter valid qualification")
-    .isLength({ min: 4, max: 25 })
+    .isLength({ min: 4})
     .withMessage("Please, enter job qualification in range 4 to 25 chars"),
   body("image_url")
     .isString()

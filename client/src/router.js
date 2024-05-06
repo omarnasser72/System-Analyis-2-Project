@@ -10,9 +10,9 @@ import AboutUs from "./Enter our site/AboutUs/AboutUs";
 import ManageJobs from "./Abmin/manageJobs/ManageJobs";
 import UpdateJob from "./Abmin/manageJobs/UpdateJob";
 import AddJob from "./Abmin/manageJobs/AddJob";
-import ManageUsers from "./Abmin/manageUsers/ManageUsers";
-import UpdateUser from "./Abmin/manageUsers/UpdateUser";
-import AddUser from "./Abmin/manageUsers/AddUser";
+import ManageCompanies from "./Abmin/manageCompanies/ManageCompanies";
+import UpdateCompanies from "./Abmin/manageCompanies/UpdateCompanies";
+import AddCompany from "./Abmin/manageCompanies/AddCompany";
 import Guest from "./middleware/guest";
 import Admin from "./middleware/admin";
 import GetUser from "./Abmin/manageJobs/GetUser";
@@ -83,20 +83,20 @@ export const router = createBrowserRouter([
         ],
       },
       {
-        path: "/manageUsers",
+        path: "/ManageCompanies",
         element: <Admin />,
         children: [
           {
             path: "",
-            element: <ManageUsers />,
+            element: <ManageCompanies />,
           },
           {
-            path: "AddUser",
-            element: <AddUser />,
+            path: "AddCompany",
+            element: <AddCompany />,
           },
           {
             path: ":id",
-            element: <UpdateUser />,
+            element: <UpdateCompanies />,
           },
         ],
       },
