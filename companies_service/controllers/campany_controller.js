@@ -10,13 +10,9 @@ getCompanies = async (req, res) => {
   }
 };
 
-
 checkServiceRunning = (req, res) => {
   res.send("Hello World! - from campanies service");
 };
-
-
-
 
 // Add a new company
 addCompany = async (req, res) => {
@@ -34,9 +30,13 @@ addCompany = async (req, res) => {
 updateCompany = async (req, res) => {
   try {
     const { id } = req.params;
-    const company = await Company.findByIdAndUpdate(id, req.body, { new: true });
+    const company = await Company.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
     if (!company) {
-      return res.status(404).json({ success: false, error: "Company not found" });
+      return res
+        .status(404)
+        .json({ success: false, error: "Company not found" });
     }
     return res.status(200).json({ success: true, data: company });
   } catch (err) {
@@ -51,7 +51,9 @@ deleteCompany = async (req, res) => {
     const { id } = req.params;
     const company = await Company.findByIdAndDelete(id);
     if (!company) {
-      return res.status(404).json({ success: false, error: "Company not found" });
+      return res
+        .status(404)
+        .json({ success: false, error: "Company not found" });
     }
     return res.status(200).json({ success: true, data: {} });
   } catch (err) {
@@ -59,8 +61,6 @@ deleteCompany = async (req, res) => {
     return res.status(400).json({ success: false, error: err.message });
   }
 };
-
-
 
 module.exports = {
   addCompany,
