@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 //const bcrypt = require('bcrypt');
-const User = require("../models/userjs");
+const User = require("../models/User");
 
 // Register a new user
 const register = async (req, res, next) => {
@@ -21,7 +21,7 @@ const login = async (req, res, next) => {
   const { email, password } = req.body;
 
   try {
-    const user = await User.findOne({ email });
+    let user = await User.findOne({ email });
     if (!user) {
       return res.status(404).json({ message: "email not found" });
     }
@@ -34,7 +34,8 @@ const login = async (req, res, next) => {
     const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, {
       expiresIn: "1 hour",
     });
-    res.json({ token });
+    user.token = token;
+    res.json(user);
   } catch (error) {
     next(error);
   }
