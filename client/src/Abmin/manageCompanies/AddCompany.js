@@ -1,70 +1,120 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Form from "react-bootstrap/Form";
+import { Alert } from "react-bootstrap";
 
 const AddCompany = () => {
   const [error, setError] = useState(false);
-  const [info, setInfo] = useState({});
-  const [nameExists, setNameExists] = useState(false); // State to check if name already exists
+  const [justAdded, setJustAdded] = useState(false);
+  const [copmanyServiceIsDown, setCompanyServiceIsDown] = useState(false);
+
+  const [company, setCompany] = useState({
+    name: "",
+    major: "",
+    info: "",
+    loading: false,
+    err: null,
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5002/api/Addcompanies", info);
+      const res = await axios.post(
+        "http://localhost:5002/api/Addcompanies",
+        company
+      );
       console.log(res);
-      // Handle success scenario
+      if (res?.data?.data) {
+        setJustAdded(true);
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      } else setCompanyServiceIsDown(true);
     } catch (error) {
-      // Handle error scenario
-      if (error?.response?.data?.errMsg === "company name already exists") {
-        setNameExists(true);
-      }
-      console.error(error);
-      setError(true);
+      setCompany({
+        ...company,
+        loading: false,
+        err: "Company service is down, please try again later ! ",
+      });
+      setCompanyServiceIsDown(true);
+      console.log(error);
+      if (!copmanyServiceIsDown || company?.err) setError(true);
     }
   };
 
-  const handleChange = (e) => {
-    if (e.target.id === "name") setNameExists(false); // Reset nameExists if name field changes
-    setInfo({ ...info, [e.target.id]: e.target.value });
-  };
+  useEffect(() => {
+    console.log("Company: ", company);
+    console.log("error: ", true);
+    console.log(company?.err);
+  }, [company]);
 
   return (
-    <div className="login-container">
+    <div className="login-container" style={{ minHeight: "60vh" }}>
       <h1>Add new Company</h1>
-      <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3">
-          <textarea
-            id="name"
-            className="form-control w-50"
-            rows={1}
-            placeholder="Company Name"
-            onChange={handleChange}
-          ></textarea>
-          {nameExists && <p style={{ color: "red" }}>Company name already exists</p>}
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <textarea
-            id="info"
-            className="form-control w-50"
-            rows={3}
-            placeholder="Company Information"
-            onChange={handleChange}
-          ></textarea>
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <textarea
-            id="major"
-            className="form-control w-50"
-            rows={1}
-            placeholder="Company Major"
-            onChange={handleChange}
-          ></textarea>
-        </Form.Group>
-        <button className="btn btn-dark w-20" type="submit">
-          Add Company
-        </button>
-      </Form>
-      {error && (
+      {company?.err && (
+        <Alert
+          variant="danger"
+          className="p-2"
+          style={{ width: "fit-content" }}
+        >
+          {company?.err}
+        </Alert>
+      )}
+      {(!company?.err || !copmanyServiceIsDown) && (
+        <Form onSubmit={handleSubmit}>
+          <Form.Group className="mb-3">
+            <textarea
+              id="name"
+              className="form-control w-50"
+              rows={1}
+              placeholder="Company Name"
+              onChange={(e) => {
+                setCompany({ ...company, name: e.target.value });
+              }}
+            ></textarea>
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <textarea
+              id="info"
+              className="form-control w-50"
+              rows={3}
+              placeholder="Company Information"
+              onChange={(e) => {
+                setCompany({ ...company, info: e.target.value });
+              }}
+            ></textarea>
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <textarea
+              id="major"
+              className="form-control w-50"
+              rows={1}
+              placeholder="Company Major"
+              onChange={(e) => {
+                setCompany({ ...company, major: e.target.value });
+              }}
+            ></textarea>
+          </Form.Group>
+          <button className="btn btn-dark w-20" type="submit">
+            Add Company
+          </button>
+        </Form>
+      )}
+      {justAdded && (
+        <div
+          style={{
+            backgroundColor: "rgb(174, 255, 137)",
+            padding: "20px",
+            fontWeight: "600",
+            margin: "20px",
+            width: "fit-content",
+          }}
+          onClick={() => setJustAdded(false)}
+        >
+          Company added successfully
+        </div>
+      )}
+      {!company?.err && error && (
         <div
           style={{
             backgroundColor: "rgb(255, 171, 171)",

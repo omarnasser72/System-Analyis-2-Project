@@ -1,0 +1,15 @@
+.btn {
+  margin-left: 0%;
+  margin-bottom: 10px;
+}
+.card-img {
+  height: 300px;
+}
+img {
+  height: 150px;
+}
+.card {
+  margin: 0px;
+  /*height: 80vh;*/
+  width: 290px;
+}

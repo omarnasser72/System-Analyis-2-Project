@@ -10,7 +10,7 @@ const jobRequsetsSchema = mongoose.Schema({
     require: true,
   },
   acceptance: {
-    type: Boolean,
+    type: Number,
   },
 });
 

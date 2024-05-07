@@ -11,7 +11,8 @@ const Footer = () => {
   const fetchWeather = async () => {
     try {
       const response = await axios.get("http://localhost:5003/api/weather");
-      setWeather(response.data);
+      console.log(response?.data?.value);
+      setWeather(response?.data?.value?.split(" ")[0]);
     } catch (error) {
       setWeatherError("Failed to fetch weather data. Please try again later.");
       console.error("Error fetching weather:", error);
@@ -20,10 +21,13 @@ const Footer = () => {
 
   const fetchDateTime = async () => {
     try {
-      const response = await axios.get("http://localhost:4000/api/datetime");
+      const response = await axios.get("http://localhost:4000/datetime");
+      console.log(response?.data);
       setDateTime(response.data);
     } catch (error) {
-      setDateTimeError("Failed to fetch date and time data. Please try again later.");
+      setDateTimeError(
+        "Failed to fetch date and time data. Please try again later."
+      );
       console.error("Error fetching date and time:", error);
     }
   };
@@ -37,16 +41,18 @@ const Footer = () => {
     <div className="Footer_id">
       {weather && (
         <div className="weather">
-          <p>Weather: {weather.description}</p>
-          <p>Temperature: {weather.temperature}°C</p>
+          {/*<p>Weather: {weather.description}</p>*/}
+          <p>Temperature: {weather}°C</p>
         </div>
       )}
 
-      
       {weatherError && <p>{weatherError}</p>}
-      {dateTime && <p>Date and Time: {dateTime}</p>}
+      {dateTime && (
+        <p>
+          Date and Time: {dateTime.time} {dateTime.date}
+        </p>
+      )}
       {dateTimeError && <p>{dateTimeError}</p>}
-
 
       <p>All Copyright &copy; reserved to our website</p>
     </div>

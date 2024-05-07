@@ -52,9 +52,6 @@ const Header = () => {
                 <Link className="nav-link" to={"/Login"}>
                   Log In
                 </Link>
-                <Link className="nav-link" to={"/ContactUs"}>
-                  Contact Us
-                </Link>
                 <Link className="nav-link" to={"/AboutUs"}>
                   About Us
                 </Link>
@@ -69,9 +66,11 @@ const Header = () => {
                 <Link className="nav-link" to={"/manageJobs"}>
                   Manage jobs
                 </Link>
-
-                <Link className="nav-link" to={"/manageUsers"}>
+                <Link className="nav-link" to={"/manageCompanies"}>
                   Manage Companies
+                </Link>
+                <Link className="nav-link" to={"/contactUsMessages"}>
+                  Contact Us Messages
                 </Link>
               </>
             )}

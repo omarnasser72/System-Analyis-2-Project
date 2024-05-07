@@ -10,7 +10,7 @@ img {
 }
 .card {
   margin: 0px;
-  height: 80vh;
+  /*height: 80vh;*/
   width: 290px;
 }
 .ratingSec {

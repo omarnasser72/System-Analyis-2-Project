@@ -1,5 +1,6 @@
 import { validationResult } from "express-validator";
 import Job from "../models/Job.js";
+import JobsRequests from "../models/JobsRequests.js";
 
 export const addJob = async (req, res, next) => {
   try {
@@ -45,6 +46,7 @@ export const deleteJob = async (req, res, next) => {
     if (!job) return res.status(400).json({ message: "job doesn't exist!" });
 
     await Job.findByIdAndDelete(req.params.id);
+    await JobsRequests.findOneAndDelete({ job_id: req.params.id });
 
     res.status(200).json("Job deleted successfully");
   } catch (error) {

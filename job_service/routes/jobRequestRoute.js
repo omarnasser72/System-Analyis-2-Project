@@ -26,8 +26,8 @@ router.put(
   body("acceptance")
     .isString()
     .withMessage("Please, enter valid job_id")
-    .isBoolean()
-    .withMessage("Please, enter boolean value for acceptance"),
+    .isNumeric()
+    .withMessage("Please, enter numeric value for acceptance"),
   updateJobRequest
 );
 

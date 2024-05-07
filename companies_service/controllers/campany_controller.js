@@ -62,10 +62,25 @@ deleteCompany = async (req, res) => {
   }
 };
 
+getCompany = async (req, res) => {
+  try {
+    const company = await Company.findById(req.params.id);
+    if (!company)
+      return res
+        .status(400)
+        .json({ success: false, error: "company doesn't exist!" });
+    return res.status(200).json({ success: true, data: company });
+  } catch (err) {
+    console.error(err);
+    return res.status(400).json({ success: false, error: err.message });
+  }
+};
+
 module.exports = {
   addCompany,
   updateCompany,
   deleteCompany,
   getCompanies,
   checkServiceRunning,
+  getCompany,
 };

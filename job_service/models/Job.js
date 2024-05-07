@@ -13,10 +13,6 @@ const jobSchema = new mongoose.Schema({
     type: Number,
     require: true,
   },
-  max_candidate_number: {
-    type: Number,
-    require: true,
-  },
   qualification: {
     type: String,
     require: true,

@@ -18,6 +18,8 @@ import Admin from "./middleware/admin";
 import GetUser from "./Abmin/manageJobs/GetUser";
 import GetJob from "./Enter our site/GetJob/GetJob";
 import Companies from "./Enter our site/Companies/Companies";
+import ContactUsMessages from "./Enter our site/Contact Us Messages/ContactUsMessages";
+
 export const router = createBrowserRouter([
   {
     path: "",
@@ -39,11 +41,15 @@ export const router = createBrowserRouter([
         path: "/AboutUs",
         element: <AboutUs />,
       },
-        {
-          path: "/Companies",
-          element: <Companies />,
-        },
-      
+      {
+        path: "/Companies",
+        element: <Companies />,
+      },
+      {
+        path: "/contactUsMessages",
+        element: <ContactUsMessages />,
+      },
+
       // GUEST MIDDLEWARE
       {
         element: <Guest />,
@@ -57,7 +63,6 @@ export const router = createBrowserRouter([
             path: "/GetJob",
             element: <GetJob />,
           },
-         
         ],
       },
       {

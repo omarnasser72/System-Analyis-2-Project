@@ -1,88 +1,95 @@
-import React from 'react';
-import { Table } from 'react-bootstrap';
-import { Link ,useParams } from 'react-router-dom';
+import React from "react";
+import { Alert, Table } from "react-bootstrap";
 import { getAuthUser } from "../../Storage/Storage.js";
-import { useState ,useEffect} from 'react';
-import axios from 'axios';
+import { useState, useEffect } from "react";
+import axios from "axios";
+import Spinner from "react-bootstrap/Spinner";
 const GetJob = () => {
-  let{id}=useParams();
-    const auth = getAuthUser();
-    const [job_application, setuser] = useState({
-      loading: true,
-      results: [],
-      err: null,
-      reload: 0,
-    });
-useEffect(()=>{
-    setuser({ ...job_application, loading: true });
+  const auth = getAuthUser();
+  const id = auth._id;
+  const [jobRequests, setJobRequests] = useState({
+    loading: true,
+    results: [],
+    err: null,
+    reload: 0,
+  });
+
+  useEffect(() => {
+    setJobRequests({ ...jobRequests, loading: true });
     axios
-      .get("http://localhost:7878/api/jobs/",
-    {headers:{token:auth.token,"Content-Type":"multipart/form-data"}} )
-    .then((resp) => {
-        setuser({ ...job_application, results: resp.data, loading: false, err: null });
-
-
-    })
-    .catch((err) => {
-        setuser({
-        ...job_application,
-        loading: false,
-        err: " something went wrong, please try again later ! ",
+      .get(`http://localhost:7878/api/jobRequests/${id}`, {
+        headers: { token: auth.token, "Content-Type": "multipart/form-data" },
+      })
+      .then((resp) => {
+        setJobRequests({
+          ...jobRequests,
+          results: resp.data,
+          loading: false,
+          err: null,
         });
-    });
-  }, [job_application.reload]);
+      })
+      .catch((err) => {
+        setJobRequests({
+          ...jobRequests,
+          loading: false,
+          err: "Job service is down, please try again later ! ",
+        });
+      });
+  }, [jobRequests.reload]);
 
- 
-  console.log(job_application);
+  console.log(jobRequests);
 
-    return (
-        <div>
-        <h1> Applied User</h1>
-        <Table striped bordered hover size='1m'>
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>user_id</th>
-                    <th> Accept</th>
-                  <th> Qualification</th>
-                  <th>Max_candidate_number</th>
-                  
-                    <th>offer </th>
-                    <th>description </th>
-                    <th>position</th>
-                    
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {job_application.results.map((user) => (   
-                    <tr key={user.job_id}>
-                    <td> {user.user_id} </td>
-                    <td> {user.acceptance} </td>
-                    <td> {user.qualification} </td>
-                    
-                    <td> {user.Max_candidate_number} </td>
-                    
-                    <td> {user.offer} </td>
-                    <td> {user.description} </td>
-                    <td> {user.position} </td>
-
-                    
-        
-       
-       
-        
-       
-        
-
-
-                </tr>   
- ))}
- </tbody>
-    </Table>
-
-
+  return (
+    <div
+      style={{
+        minHeight: "60vh",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      {jobRequests?.loading === true && (
+        <div className="text-center">
+          <Spinner animation="border" role="status">
+            <div className="visually-hidden">Loading...</div>
+          </Spinner>
         </div>
-    );
+      )}
+      {jobRequests?.loading === false && jobRequests?.err === null && (
+        <>
+          <h1> Applied User</h1>
+          <Table striped bordered hover size="1m">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>job id</th>
+                <th>acceptance</th>
+              </tr>
+            </thead>
+            <tbody>
+              {jobRequests.results.map((request) => (
+                <tr key={request._id}>
+                  <td> {request._id} </td>
+                  <td> {request.job_id} </td>
+                  <td>
+                    {request.acceptance === 1
+                      ? "accepted"
+                      : request.acceptance === 0
+                      ? "pending"
+                      : "rejected"}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </>
+      )}
+      {jobRequests.loading === false && jobRequests.err !== null && (
+        <Alert variant="danger" className="p-2" style={{ margin: "5%" }}>
+          {jobRequests.err}
+        </Alert>
+      )}
+    </div>
+  );
 };
 
 export default GetJob;

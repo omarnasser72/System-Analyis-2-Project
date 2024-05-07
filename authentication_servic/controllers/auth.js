@@ -23,18 +23,23 @@ const login = async (req, res, next) => {
   try {
     let user = await User.findOne({ email });
     if (!user) {
-      return res.status(404).json({ message: "email not found" });
+      return res
+        .status(404)
+        .json({ message: "Email or Password is Incorrect" });
     }
 
     const passwordMatch = await user.comparePassword(password);
     if (!passwordMatch) {
-      return res.status(401).json({ message: "Incorrect password" });
+      return res
+        .status(401)
+        .json({ message: "Email or Password is Incorrect" });
     }
 
     const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, {
       expiresIn: "1 hour",
     });
-    res.json({ token });
+    user.token = token;
+    res.json(user);
   } catch (error) {
     next(error);
   }

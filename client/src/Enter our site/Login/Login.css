@@ -2,14 +2,30 @@
   width: 50%;
   margin: auto;
   margin-bottom: 30%;
+  min-height: 60vh;
 }
 
 .btn {
-  margin-left: 40%;
+  margin-left: 0;
   margin-bottom: 10px;
 }
 
 h2 {
   text-align: center;
   margin-top: 20px;
+}
+
+.emailOrPassNotFound {
+  text-align: center;
+  color: firebrick;
+  background-color: rgb(255, 110, 105);
+  border-radius: 5px;
+  padding: 2%;
+}
+.serviceDown {
+  text-align: center;
+  color: firebrick;
+  background-color: rgb(255, 110, 105);
+  border-radius: 5px;
+  padding: 2%;
 }

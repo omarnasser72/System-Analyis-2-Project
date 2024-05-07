@@ -3,17 +3,22 @@ import axios from "axios";
 import { setAuthUser } from "../../Storage/Storage";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
+import Spinner from "react-bootstrap/Spinner";
+
 const Login = () => {
   const navigate = useNavigate();
   const [login, setLogin] = useState({
     email: "",
     password: "",
     loading: false,
-    err: [],
+    err: null,
   });
+  const [emailOrPassNotFound, setEmailOrPassNotFound] = useState(false);
+  const [authServiceIsDown, setAuthServiceIsDown] = useState(false);
+
   const LoginFun = (e) => {
     e.preventDefault();
-    setLogin({ ...login, loading: true, err: [] });
+    setLogin({ ...login, loading: true, err: null });
     axios
       .post("http://localhost:8080/api/auth/login", {
         email: login.email,
@@ -30,9 +35,12 @@ const Login = () => {
         setLogin({
           ...login,
           loading: false,
-          err: errors.response.data.errors,
+          err: errors?.response?.data?.errors,
         });
+        if (errors?.response?.data?.errors === "Email or Password is Incorrect")
+          setEmailOrPassNotFound(true);
         console.log(errors);
+        setAuthServiceIsDown(true);
       });
   };
   return (
@@ -61,11 +69,28 @@ const Login = () => {
         />
       </div>
 
-      <div className="submit">
-        <button type="submit" className="btn btn-dark">
-          Submit
-        </button>
-      </div>
+      {login.loading === false && (
+        <div className="submit">
+          <button type="submit" className="btn btn-dark">
+            Submit
+          </button>
+        </div>
+      )}
+      {login?.loading === true && (
+        <div className="text-center">
+          <Spinner animation="border" role="status">
+            <div className="visually-hidden">Loading...</div>
+          </Spinner>
+        </div>
+      )}
+      {emailOrPassNotFound && (
+        <div className="emailOrPassNotFound">
+          Email or Password is Incorrect
+        </div>
+      )}
+      {authServiceIsDown && (
+        <div className="serviceDown">Authentication service is down</div>
+      )}
     </form>
   );
 };

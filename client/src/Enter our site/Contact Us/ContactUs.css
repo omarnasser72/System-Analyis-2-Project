@@ -1,13 +1,32 @@
 .form {
-    width: 50%;
-    margin:  auto;
-  }
-  
-  .btn {
-    margin-left: 40%;
-    margin-bottom: 10px;
-  }
-  h2{
-    text-align: center;
-    margin-top: 20px;
-  }
+  margin: auto;
+}
+
+.btn {
+  margin-bottom: 10px;
+}
+h2 {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.contactUs {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.email,
+.messsage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.submit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

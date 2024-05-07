@@ -7,5 +7,6 @@ router.get("/", CampanyController.checkServiceRunning);
 router.post("/Addcompanies", CampanyController.addCompany);
 router.put("/companies/:id", CampanyController.updateCompany);
 router.delete("/companies/:id", CampanyController.deleteCompany);
+router.get("/companies/:id", CampanyController.getCompany);
 
 module.exports = router;
