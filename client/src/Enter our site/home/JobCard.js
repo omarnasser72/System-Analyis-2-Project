@@ -24,6 +24,7 @@ const JobCard = (props) => {
   const [applied, setApplied] = useState(false);
   const [applicationSuccess, setApplicationSuccess] = useState(false);
   const [failedMsg, setFailedMsg] = useState("failed to apply");
+  const [appliedBefore, setAppliedBefore] = useState(false);
 
   const Applyjob = async (job_id) => {
     console.log("apply button");
@@ -39,9 +40,13 @@ const JobCard = (props) => {
       })
       .then((resp) => {
         console.log(resp);
-        if (resp?.data === "You've already applied to this job before.")
+        if (resp?.data === "You've already applied to this job before.") {
+          setAppliedBefore(true);
           setApplicationSuccess(false);
-        else if (resp?.data) setApplicationSuccess(true);
+        } else if (resp?.data) {
+          setAppliedBefore(false);
+          setApplicationSuccess(true);
+        }
 
         setjobs({ ...jobs, results: resp.data, loading: false, err: null });
       })
@@ -104,7 +109,9 @@ const JobCard = (props) => {
                 padding: "5px",
               }}
             >
-              {failedMsg}
+              {appliedBefore
+                ? "You've already applied to this job."
+                : failedMsg}
             </div>
           )}
         </>
