@@ -31,16 +31,27 @@ const Login = () => {
         setAuthUser(resp?.data);
         navigate("/");
       })
-      .catch((errors) => {
-        setLogin({
-          ...login,
-          loading: false,
-          err: errors?.response?.data?.errors,
-        });
-        if (errors?.response?.data?.errors === "Email or Password is Incorrect")
+      .catch((error) => {
+        if (
+          error?.response?.data?.message === "Email or Password is Incorrect"
+        ) {
           setEmailOrPassNotFound(true);
-        console.log(errors);
-        setAuthServiceIsDown(true);
+          setLogin({
+            ...login,
+            loading: false,
+            err: error?.response?.data?.message,
+          });
+        } else {
+          setLogin({
+            ...login,
+            loading: false,
+            err:
+              "Authentication service is down" ||
+              error?.response?.data?.message,
+          });
+          setAuthServiceIsDown(true);
+        }
+        console.log(error);
       });
   };
   return (
@@ -88,7 +99,7 @@ const Login = () => {
           Email or Password is Incorrect
         </div>
       )}
-      {authServiceIsDown && (
+      {authServiceIsDown && emailOrPassNotFound !== true && (
         <div className="serviceDown">Authentication service is down</div>
       )}
     </form>
